@@ -1,22 +1,31 @@
 class Tree{
     constructor(db){
-        this.DB=db;
-    }
-    async getAllTrees(){
-        let [sql,t] = await this.DB.execute(`SELECT id FROM trees,plants WHERE id_plants = id '`);
+        this.DB = db;
     }
 
-async createTree(nameTree){
-    let [sql,t] = await this.DB.execute(`SELECT id FROM plants where name = '${nameTree}'`)
-    console.log(sql);
-    if(sql.lenght>0){
-       await this.DB.execute(`INSERT INTO trees (id_plants,date) VALUE ('?','?');`,sql[0].id,new Date());
-    }else{
-        sql = await this.DB.execute(`INSERT INTO plants (name) VALUE ('?');`,nameTree);
-        console.log(sql,insertId);
-        await this.DB.execute(`INSERT INTO trees (id_plants,date) VALUE ('?','?');`,sql.insertId,new Date());
+    async getAllTree(){
+       let [sql,t]= await this.DB.execute(`SELECT * FROM threes,plants WHERE id_plants = id`);
     }
-}
+
+   async createTree(nameTree){
+    try {
+        const date = new Date();
+        const formattedDate = date.toISOString().split('T')[0];
+        let [sql,t]= await this.DB.execute(`SELECT * FROM plants where name = ?`,[nameTree]);
+        if(sql.length > 0){
+            await this.DB.execute(`INSERT INTO threes(id_plants, date) VALUE(?,?);`,[sql[0].id, formattedDate]);
+        }else{
+            sql = await this.DB.execute(`INSERT INTO plants(name) VALUE(?);`,[nameTree]);
+            await this.DB.execute(`INSERT INTO threes(id_plants, date) VALUE(?,?);`,[sql.insertId, formattedDate]);
+            console.log(sql);
+        } 
+    } catch (error) {
+        console.log(error);
+    }
+    
+    
+    }
+
 }
 
 module.exports = Tree;
