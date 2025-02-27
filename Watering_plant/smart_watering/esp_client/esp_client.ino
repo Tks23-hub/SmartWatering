@@ -1,13 +1,11 @@
 #include <DHT.h>
 #include <ArduinoJson.h>
 
-// ---- pins ------
 #define dhtPin 16
 #define pump 15
 #define lightSensor 36
-#define MoistureSensore 39
+#define MoistureSensor 39
 
-// ----- General data -----
 #define DHTTYPE DHT22
 DHT dht(dhtPin, DHTTYPE);
 JsonDocument doc;
@@ -19,7 +17,6 @@ int minT, maxT;
 bool isOnPump;
 int countOn = 0;
 
-//----- State machine -----
 #define TEMP_MODE 61
 #define SOIL_MOISTURE_MODE 62
 #define SABBATH_MODE 63
@@ -29,9 +26,14 @@ unsigned long statusCheckTime;
 unsigned long DataPullTime;
 unsigned long activationTime;
 
+unsigned long pumpStartTime = 0;
+unsigned long totalWaterUsed = 0;
+const float waterFlowRate = 200.0;
 
 unsigned long lastDataSentTime = 0;
-const unsigned long dataSendInterval = 10800000; // 3 hours in milliseconds
+const unsigned long dataSendInterval = 10800000;
+
+int plantID = 1;
 
 void setup() {
   pinMode(pump, OUTPUT);
@@ -63,7 +65,6 @@ void loop() {
       break;
   }
 
-
   if (millis() - lastDataSentTime >= dataSendInterval) {
     sendSensorData();
     lastDataSentTime = millis();
@@ -90,18 +91,16 @@ void runTemperatureMode() {
   }
 
   if (isOnPump && temp < CurrentTemp && countOn < 2 && light < 40) {
-    digitalWrite(pump, LOW);
+    startWatering();
     if (millis() - activationTime > (maxT * minutes)) {
-      digitalWrite(pump, HIGH);
-      isOnPump = false;
+      stopWatering();
       countOn++;
       activationTime = millis();
     }
   } else if (isOnPump && countOn < 2) {
-    digitalWrite(pump, LOW);
+    startWatering();
     if (millis() - activationTime > (minT * minutes)) {
-      digitalWrite(pump, HIGH);
-      isOnPump = false;
+      stopWatering();
       countOn++;
       activationTime = millis();
     }
@@ -109,7 +108,7 @@ void runTemperatureMode() {
 }
 
 void runSoilMoistureMode() {
-  int moisture = analogRead(MoistureSensore);
+  int moisture = analogRead(MoistureSensor);
 
   if ((millis() - DataPullTime) > (2 * minutes)) {
     deserializeJson(doc, getJsonData("soilMode"));
@@ -117,9 +116,9 @@ void runSoilMoistureMode() {
     DataPullTime = millis();
 
     if (moisture < targetMoisture - 10) {
-      digitalWrite(pump, LOW);
+      startWatering();
     } else if (moisture > targetMoisture + 10) {
-      digitalWrite(pump, HIGH);
+      stopWatering();
     }
   }
 }
@@ -131,11 +130,11 @@ void runSabbathMode() {
     int sabbathOffTime = doc["offTime"];
     DataPullTime = millis();
 
-    if (millis() % (sabbathOnTime * minutes) == 0) {
-      digitalWrite(pump, LOW);
+    if (millis() - activationTime >= (sabbathOnTime * minutes)) {
+      startWatering();
     }
-    if (millis() % (sabbathOffTime * minutes) == 0) {
-      digitalWrite(pump, HIGH);
+    if (millis() - activationTime >= (sabbathOffTime * minutes)) {
+      stopWatering();
     }
   }
 }
@@ -151,18 +150,28 @@ void runManualMode() {
 
   if (commandReceived && millis() - lastCommandTime >= 3000) {
     commandReceived = false;
-    digitalWrite(pump, LOW);
+    startWatering();
     delay(5000);
-    digitalWrite(pump, HIGH);
+    stopWatering();
   }
 }
 
+void startWatering() {
+  digitalWrite(pump, LOW);
+  pumpStartTime = millis();
+}
+
+void stopWatering() {
+  digitalWrite(pump, HIGH);
+  unsigned long wateringTime = (millis() - pumpStartTime) / 60000.0;
+  totalWaterUsed += wateringTime * waterFlowRate;
+}
 
 void sendSensorData() {
   float currentTemp = dht.readTemperature();
   int currentLight = map(analogRead(lightSensor), 0, 4095, 0, 100);
-  int currentMoisture = analogRead(MoistureSensore);
+  int currentMoisture = analogRead(MoistureSensor);
 
   Serial.println("Sending sensor data to server...");
-  sendData(currentTemp, currentLight, currentMoisture);
+  sendData(currentTemp, currentLight, currentMoisture, plantID, totalWaterUsed);
 }

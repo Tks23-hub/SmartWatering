@@ -17,23 +17,32 @@ void WiFi_SETUP(){
   Serial.println("WiFi connected");
 }
 
-void sendData(float temp, int linght, int moisture){
+void sendData(float temp, int light, int moisture, int plantID, float waterUsed) {
   HTTPClient http;
-  String dataUrl = "temp=" + String(temp);
-  dataUrl+= "&linght="+ String(linght);
-  dataUrl+= "&moisture="+ String(moisture);
-  http.begin(client, "http://192.168.1.83:3001/esp?" + dataUrl );
+  String dataUrl = "http://192.168.1.83:3001/esp";
+  
+  http.begin(client, dataUrl);
+  http.addHeader("Content-Type", "application/json");
 
-   int httpCode = http.GET();
-   if(httpCode == HTTP_CODE_OK) {
-     Serial.print("HTTP response code ");
-     Serial.println(httpCode);
-     //String Res = http.getString();
-     //Serial.println(Res);
-     //ret = Res.toInt();
-    }
-    http.end();
+  String jsonPayload = "{";
+  jsonPayload += "\"temp\":" + String(temp) + ",";
+  jsonPayload += "\"light\":" + String(light) + ",";
+  jsonPayload += "\"moisture\":" + String(moisture) + ",";
+  jsonPayload += "\"plantID\":" + String(plantID) + ",";
+  jsonPayload += "\"waterUsed\":" + String(waterUsed);
+  jsonPayload += "}";
+
+  int httpCode = http.POST(jsonPayload);
+  if (httpCode == HTTP_CODE_OK) {
+    Serial.println("Data sent successfully");
+  } else {
+    Serial.print("Error sending data: ");
+    Serial.println(httpCode);
+  }
+
+  http.end();
 }
+
 
 int GetState() {
     int ret = -1;
@@ -68,3 +77,4 @@ String getJsonData(String state){
         
     return json;
 }
+
