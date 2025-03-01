@@ -1,0 +1,137 @@
+/* 🌱 General Styles */
+body {
+    font-family: "Poppins", sans-serif;
+    background: #e3f2fd;
+    margin: 0;
+    padding: 0;
+}
+
+/* 🌊 Main Container */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* 📋 Heading */
+h1 {
+    text-align: center;
+    color: #1e88e5;
+    font-size: 28px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* 🔘 Form */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #1e88e5;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #43a047;
+    box-shadow: 0px 0px 10px rgba(67, 160, 71, 0.3);
+}
+
+/* 🚀 Add Button */
+.btn-add {
+    background: #43a047;
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-add:hover {
+    background: #2e7d32;
+    transform: scale(1.05);
+}
+
+/* 📅 List Items */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.schedule-item {
+    background: #f1f8e9;
+    margin: 10px 0;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 6px solid #1e88e5;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.schedule-item:hover {
+    background: #e3f2fd;
+    transform: scale(1.02);
+}
+
+/* 🗑️ Delete Button */
+.btn-delete {
+    background: #d32f2f;
+    color: white;
+    font-size: 14px;
+    border: none;
+    padding: 8px 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-delete:hover {
+    background: #b71c1c;
+    transform: scale(1.1);
+}
+
+/* 🎬 Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 📱 Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+    }
+
+    .schedule-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-delete {
+        margin-top: 10px;
+        width: 100%;
+    }
+}

@@ -1,0 +1,68 @@
+/* 🌿 Trees Page Background */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: linear-gradient(120deg, #56ab2f, #a8e063);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    text-align: center;
+    color: white;
+}
+
+/* 🔍 Search Form */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* 🌱 Tree List */
+.tree-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    list-style: none;
+    padding: 20px;
+}
+
+/* 🏡 Each Tree Box */
+.tree-item {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.tree-item:hover {
+    transform: scale(1.05);
+}
+
+/* 🌿 Tree Name */
+.tree-item span {
+    font-weight: bold;
+    color: #333;
+}
+
+/* ❌ Delete Button */
+.btn-delete {
+    background: #ff4d4d;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.btn-delete:hover {
+    background: #e60000;
+}

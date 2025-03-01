@@ -1,0 +1,21 @@
+nav {
+    background: #4CAF50;
+    padding: 10px;
+  }
+  
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+  }
+  
+  li {
+    display: inline;
+  }
+  
+  a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+  }
+  
