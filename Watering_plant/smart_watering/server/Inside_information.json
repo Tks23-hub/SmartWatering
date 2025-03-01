@@ -1,0 +1,18 @@
+{
+    "state": "61", 
+    "tempMode": {
+        "temp": 23.50,
+        "minTime": 1,
+        "maxTime": 3
+    },
+    "SOILMOISTURE": {
+        "moisture": 50
+    },
+    "sabbathMode": {
+        "onTime": 6,
+        "offTime": 10
+    },
+    "manualMode": {
+        "wateringTime": 5
+    }
+}
