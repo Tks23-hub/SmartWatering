@@ -31,3 +31,10 @@
 .schedule-item:hover {
     transform: scale(1.05);
 }
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+}

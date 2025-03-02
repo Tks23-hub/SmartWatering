@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "../styles/Trees.css";  // ✅ Import the fixed CSS
+import "../styles/Trees.css";  
 
 function Trees() {
   const [trees, setTrees] = useState([]);
   const [treeName, setTreeName] = useState("");
+  const [showPlantAnimation, setShowPlantAnimation] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:3001/tree/all")
@@ -15,17 +16,18 @@ function Trees() {
   const handleAddTree = (e) => {
     e.preventDefault();
     
-    // Get the current date in YYYY-MM-DD format
     const currentDate = new Date().toISOString().split('T')[0];
 
     fetch("http://localhost:3001/tree/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: treeName, date: currentDate }), // Include date
+      body: JSON.stringify({ name: treeName, date: currentDate }), 
     })
       .then((res) => res.json())
       .then(() => {
         setTreeName("");
+        setShowPlantAnimation(true);  // 🌱 Show animation for 3 seconds
+        setTimeout(() => setShowPlantAnimation(false), 3000);
         return fetch("http://localhost:3001/tree/all");
       })
       .then((res) => res.json())
@@ -47,6 +49,12 @@ function Trees() {
     <div className="trees-container">
       <h1>🌳 Trees List</h1>
 
+      {showPlantAnimation && (
+        <div className="plant-animation">
+          <img src="/images/plant-growing.gif" alt="Plant Growing" />
+        </div>
+      )}
+
       <form className="trees-form" onSubmit={handleAddTree}>
         <input
           type="text"
@@ -61,7 +69,7 @@ function Trees() {
       <ul className="tree-list">
         {trees.map((tree) => (
           <li key={tree.id} className="tree-item">
-            <span>🌱 <strong>{tree.plant_name}</strong> - Planted on: {new Date(tree.date).toLocaleDateString()}</span>
+            <span>🌱 <strong>{tree.name || tree.plant_name}</strong> - Planted on: {new Date(tree.date).toLocaleDateString()}</span>
             <button className="btn-delete" onClick={() => handleDeleteTree(tree.id)}>❌ Delete</button>
           </li>
         ))}

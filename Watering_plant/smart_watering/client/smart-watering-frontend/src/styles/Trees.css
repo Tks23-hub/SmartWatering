@@ -66,3 +66,45 @@ form {
 .btn-delete:hover {
     background: #e60000;
 }
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+}
+
+
+/* 🌱 Planting Animation */
+.plant-animation {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeOut 3s linear forwards;
+}
+
+/* 🌱 Animated Plant GIF */
+.plant-animation img {
+    width: 100px;
+    height: auto;
+    animation: growPlant 3s linear infinite; /* ✅ Loop the animation for 3 sec */
+}
+
+/* 🎬 Growing Effect */
+@keyframes growPlant {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* 🔥 Make it disappear smoothly */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    80% { opacity: 0.5; }
+    100% { opacity: 0; visibility: hidden; }
+}

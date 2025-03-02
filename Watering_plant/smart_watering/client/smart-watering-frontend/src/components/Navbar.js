@@ -1,16 +1,25 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import "../styles/Navbar.css";
 
-
 function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <nav>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/trees">Trees</Link></li>
-        <li><Link to="/watering-schedule">Watering Schedule</Link></li>
-      </ul>
+      <div className="navbar-container">
+        <div className="logo">Smart Watering</div>
+        
+        <div className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+          ☰
+        </div>
+
+        <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
+          <li><a href="/">Home</a></li>
+          <li><a href="/trees">Trees</a></li>
+          <li><a href="/watering-schedule">Watering Schedule</a></li>
+          {/* <li><a href="/about">About</a></li> */}
+        </ul>
+      </div>
     </nav>
   );
 }

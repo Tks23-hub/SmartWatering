@@ -7,7 +7,6 @@ function Home() {
 
   return (
     <div className="home-container">
-      {/* 🔥 Website Intro */}
       <header className="hero-section">
         <h1>🌿 Smart Watering System</h1>
         <p>
@@ -15,39 +14,29 @@ function Home() {
         </p>
       </header>
 
-      {/* 📖 Explanation Sections */}
       <section className="info-section">
         <h2>💡 How It Works</h2>
         <p>
-          Our system helps **monitor and manage plant health** using sensors.
-          It supports different **modes** like **automatic watering, manual control, and schedule-based watering.**
+          Our system helps <strong>monitor and manage plant health</strong> using sensors.
+          It supports different <strong>modes</strong> like
+          <span className="clickable-text" onClick={() => navigate("/system-modes")}>
+            {" "}automatic watering, manual control, and schedule-based watering.
+          </span>
         </p>
       </section>
 
-      <section className="mode-explanation">
-        <h3>⚙️ System Modes:</h3>
-        <ul>
-          <li>📡 **Automatic Mode**   <br></br>Sensors decide when to water based on soil moisture.</li>
-          <li>⏳ **Scheduled Mode**  Set specific watering times per plant.</li>
-          <li>🔧 **Manual Mode**  Choose when to water manually.</li>
-          <li>🌿 **Sabbath Mode**  <br></br>Special mode for scheduled watering on specific days.</li>
-        </ul>
-      </section>
-
-      {/* 📌 Navigation Buttons */}
       <div className="navigation-options">
         <div className="option-card" onClick={() => navigate("/trees")}>
-          <img src="/images/trees.png" alt="Trees" />
+          <img src="/images/plantingTree.jpg" alt="Trees" />
           <h3>🌳 Manage Trees</h3>
           <p>View and manage all trees in the system.</p>
         </div>
 
         <div className="option-card" onClick={() => navigate("/watering-schedule")}>
-  <img src="/images/watering.png" alt="Watering" />
-  <h3>💧 Watering Schedule</h3>
-  <p>Check and modify plant watering schedules.</p>
-</div>
-
+          <img src="/images/watering.png" alt="Watering" />
+          <h3>💧 Watering Schedule</h3>
+          <p>Check and modify plant watering schedules.</p>
+        </div>
       </div>
     </div>
   );
