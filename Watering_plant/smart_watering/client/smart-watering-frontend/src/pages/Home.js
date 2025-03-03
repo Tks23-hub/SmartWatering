@@ -32,11 +32,11 @@ function Home() {
           <p>View and manage all trees in the system.</p>
         </div>
 
-        <div className="option-card" onClick={() => navigate("/watering-schedule")}>
+        {/* <div className="option-card" onClick={() => navigate("/watering-schedule")}>
           <img src="/images/watering.png" alt="Watering" />
           <h3>💧 Watering Schedule</h3>
           <p>Check and modify plant watering schedules.</p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

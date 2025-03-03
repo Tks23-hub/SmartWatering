@@ -23,16 +23,16 @@ class Tree{
     async getAllTreesWithDetails() {
         try {
             let [trees] = await this.DB.execute(`
-                SELECT t.id, p.name AS plant_name, t.date 
+                SELECT t.id, p.name, t.date 
                 FROM trees t
-                JOIN plants p ON t.id_plants = p.id
+                JOIN plants p ON t.id_plants = p.ID
             `);
             return trees;
         } catch (error) {
-            console.error("Error fetching trees:", error);
+            console.error(error);
             return [];
         }
-    }
+    }    
     
     async getTreeById(treeId) {
         try {

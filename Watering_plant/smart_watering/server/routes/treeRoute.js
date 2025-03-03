@@ -5,6 +5,8 @@ const db = require('../models/database');
 
 const tree = new Tree(db);
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // a path to add a new tree 
 router.post("/add", async (req, res) => {
     try {
@@ -15,6 +17,9 @@ router.post("/add", async (req, res) => {
         res.status(500).json({ error: "Error creating tree" });
     }
 });
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // 3 get paths 
 // 1. to get all trees from trees table 
 // 2. get all plants which is the kind of plants
@@ -27,6 +32,7 @@ router.get("/all", async (req, res) => {
         res.status(500).json({ error: "Error retrieving trees" });
     }
 });
+
 
 
 router.get("/", async (req, res) => {
@@ -52,29 +58,10 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ error: "Error retrieving tree" });
     }
 });
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// 2 paths for updating
-// 1.update the date when we added the plant in trees table 
-// 2. update the name of the plant in plant table
-router.put("/:id", async (req, res) => {
-    try {
-        const treeId = req.params.id;
-        const { newDate } = req.body;
-        
-        const updated = await tree.updateTree(treeId, newDate); 
-        if (updated) {
-            res.json({ message: "Tree updated successfully" });
-        } else {
-            res.status(404).json({ error: "Tree not found or date is the same" });
-        }
-    } catch (error) {
-        console.error("Error in updateTree route:", error);
-        res.status(500).json({ error: "Error updating tree" });
-    }
-});
-
+// path for updating update the name of the plant in plant table
 router.put("/plant/:id", async (req, res) => {
     try {
         const plantId = req.params.id;
@@ -92,6 +79,8 @@ router.put("/plant/:id", async (req, res) => {
 });
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 // a path to delete a tree by id 
 router.delete("/:id", async (req, res) => {
@@ -108,6 +97,6 @@ router.delete("/:id", async (req, res) => {
         res.status(500).json({ error: "Error deleting tree" });
     }
 });
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module.exports = router;

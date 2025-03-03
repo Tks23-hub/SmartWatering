@@ -16,6 +16,15 @@ router.post('/', async (req, res) => {
             VALUES (?, ?, ?, ?, ?, NOW())
         `, [plantID, temp, light, moisture, waterUsed]);
 
+       
+        const waterTime = new Date().toISOString().split('T')[1].slice(0, 8); 
+        const duration = waterUsed / 200;
+
+        await db.execute(`
+            INSERT INTO watering_schedule (plant_id, water_time, duration) 
+            VALUES (?, ?, ?)
+        `, [plantID, waterTime, duration]);
+
         console.log(`Data received: Temp=${temp}, Light=${light}, Moisture=${moisture}, Plant=${plantID}, WaterUsed=${waterUsed}`);
         res.json({ message: "Data received and saved to MySQL" });
 
@@ -24,6 +33,7 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: "Server error" });
     }
 });
+
 
 router.get('/state', (req, res) => {
     try {
