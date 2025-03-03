@@ -56,4 +56,20 @@ router.get('/dataMode', (req, res) => {
     }
 });
 
+router.get('/watering-history', async (req, res) => {
+    try {
+        const [rows] = await db.execute(`
+            SELECT ws.plant_id, ws.water_time, ws.duration, p.name AS plant_name
+            FROM watering_schedule ws
+            JOIN plants p ON ws.plant_id = p.ID
+            ORDER BY ws.water_time DESC
+        `);
+        res.json(rows);
+    } catch (error) {
+        console.error("Error retrieving watering history:", error);
+        res.status(500).json({ error: "Error retrieving watering history" });
+    }
+});
+
+
 module.exports = router;

@@ -14,7 +14,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/trees" element={<Trees />} />
-        <Route path="/watering-schedule" element={<WateringSchedule />} />
+        {/* <Route path="/watering-schedule" element={<WateringSchedule />} /> */}
+        <Route path="/watering-history" element={<WateringHistory />} />
         <Route path="/system-modes" element={<SystemModes />} /> 
       </Routes>
       <Footer />

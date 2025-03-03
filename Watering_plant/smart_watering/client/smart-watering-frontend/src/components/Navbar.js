@@ -16,6 +16,7 @@ function Navbar() {
         <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
           <li><a href="/">Home</a></li>
           <li><a href="/trees">Trees</a></li>
+          <li><a href="/watering-history">watering-history</a></li>
           {/* <li><a href="/watering-schedule">Watering Schedule</a></li> */}
           {/* <li><a href="/about">About</a></li> */}
         </ul>

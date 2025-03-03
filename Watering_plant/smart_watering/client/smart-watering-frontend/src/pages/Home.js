@@ -31,6 +31,12 @@ function Home() {
           <h3>🌳 Manage Trees</h3>
           <p>View and manage all trees in the system.</p>
         </div>
+        <div className="option-card" onClick={() => navigate("/watering-history")}>
+  <img src="/images/watering-history.png" alt="Watering History" />
+  <h3>📊 Watering History</h3>
+  <p>View past watering sessions and duration.</p>
+</div>
+
 
         {/* <div className="option-card" onClick={() => navigate("/watering-schedule")}>
           <img src="/images/watering.png" alt="Watering" />

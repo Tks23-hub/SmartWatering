@@ -1,0 +1,54 @@
+/* 💧 Watering History Styles */
+.history-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #3a7bd5, #3a6073);
+    border-radius: 15px;
+    text-align: center;
+    color: white;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 🌿 Table Styling */
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.history-table th, .history-table td {
+    padding: 12px;
+    text-align: center;
+}
+
+.history-table th {
+    background: #1e88e5;
+    color: white;
+}
+
+.history-table tr:nth-child(even) {
+    background: #f1f8e9;
+}
+
+.history-table tr:hover {
+    background: #e3f2fd;
+    transform: scale(1.02);
+    transition: all 0.3s ease-in-out;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+    .history-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .history-table th, .history-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
